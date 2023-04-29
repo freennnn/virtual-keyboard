@@ -8,8 +8,21 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
-  },
+    'space-before-function-paren': ['error', 'never'],
+    'no-console': 'off',
+    'no-use-before-define': ['error', {
+      functions: false,
+      classes: false,
+      variables: true,
+      allowNamedExports: false
+    }],
+    semi: ['error', 'always', {
+      omitLastInOneLineBlock: true
+    }],
+    'comma-dangle': ['error', 'never'],
+    'func-names': 'off'
+  }
 };
