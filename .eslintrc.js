@@ -23,6 +23,7 @@ module.exports = {
       omitLastInOneLineBlock: true
     }],
     'comma-dangle': ['error', 'never'],
-    'func-names': 'off'
+    'func-names': 'off',
+    'no-plusplus': 'off'
   }
 };

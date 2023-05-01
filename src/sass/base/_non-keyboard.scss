@@ -1,0 +1,45 @@
+html {
+  font-size: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgb(26, 26, 26);
+
+}
+
+.wrapper {
+  max-width: 720px;
+  min-width: 720px;
+  margin: 0 auto;
+  color: aliceblue;
+  box-shadow: -3px -3px 5px rgb(63, 63, 63) , 3px 3px 5px black;
+
+
+}
+
+.title {
+  text-align: center;
+  font-size: 2.8rem;
+  margin: 1rem auto;
+}
+
+.text-area {
+  width: 70rem;
+  height: 20rem;
+  margin: 1rem auto;
+  font-size: 1.8rem;
+  display: block;
+}
+
+.os-description, .language {
+  text-align: center;
+  margin: 0 auto;
+  padding: 1rem 0;
+  font-size: 1.8rem;
+}
+

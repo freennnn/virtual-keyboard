@@ -307,4 +307,87 @@ template {
   display: none;
 }
 
+html {
+  font-size: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.body {
+  font-family: "Open Sans", sans-serif;
+  background-color: rgb(26, 26, 26);
+}
+
+.wrapper {
+  max-width: 720px;
+  min-width: 720px;
+  margin: 0 auto;
+  color: aliceblue;
+  box-shadow: -3px -3px 5px rgb(63, 63, 63), 3px 3px 5px black;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.8rem;
+  margin: 1rem auto;
+}
+
+.text-area {
+  width: 70rem;
+  height: 20rem;
+  margin: 1rem auto;
+  font-size: 1.8rem;
+  display: block;
+}
+
+.os-description, .language {
+  text-align: center;
+  margin: 0 auto;
+  padding: 1rem 0;
+  font-size: 1.8rem;
+}
+
+.keyboard {
+  box-shadow: -3px -3px 5px rgb(63, 63, 63), 3px 3px 5px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.8rem;
+}
+
+.keyboard__row {
+  height: 48px;
+}
+
+.key {
+  width: 48px;
+  height: 48px;
+  padding: 4px;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  color: white;
+  box-shadow: -2px -2px 4px rgb(63, 63, 63), 2px 2px 4px black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.doubleSize {
+  width: 96px;
+}
+
+.sixSize {
+  width: 288px;
+}
+
+.functional {
+  background-color: aqua;
+}
+
+.symbol {
+  background-color: red;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,44 @@
+.keyboard {
+  box-shadow: -3px -3px 5px rgb(63, 63, 63) , 3px 3px 5px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.8rem;
+  //row-gap: 8px;
+}
+
+.keyboard__row {
+  height: 48px;
+}
+
+.key {
+  width: 48px;
+  height: 48px;
+  padding: 4px;
+  font-weight: bold;
+  //margin: 0 4px;
+  border: none;
+  background-color: transparent;
+  color:white;
+  box-shadow: -2px -2px 4px rgb(63, 63, 63) , 2px 2px 4px black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.doubleSize {
+  width: 96px;
+}
+
+.sixSize {
+  width: 288px;
+}
+
+.functional {
+  //font-size: 1.2rem;
+  background-color: aqua;
+}
+
+.symbol {
+  background-color: red;
+}
