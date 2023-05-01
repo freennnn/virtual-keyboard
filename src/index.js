@@ -9,7 +9,7 @@ let rows = [
 ];
 
 let keys = {
-  0: ['`', 'BackQuote', 'singleSize'],
+  0: ['`', 'Backquote', 'singleSize'],
   1: ['1', 'Digit1', 'singleSize'],
   2: ['2', 'Digit2', 'singleSize'],
   3: ['3', 'Digit3', 'singleSize'],
@@ -19,22 +19,22 @@ let keys = {
   7: ['7', 'Digit7', 'singleSize'],
   8: ['8', 'Digit8', 'singleSize'],
   9: ['9', 'Digit9', 'singleSize'],
-  10: ['0', 'Digit10', 'singleSize'],
+  10: ['0', 'Digit0', 'singleSize'],
   11: ['-', 'Minus', 'singleSize'],
   12: ['=', 'Equal', 'singleSize'],
-  13: ['delete', 'Delete', 'doubleSize', 'functional'],
+  13: ['delete', 'Backspace', 'doubleSize', 'functional'],
   // row 2
   14: ['tab', 'Tab', 'doubleSize', 'functional'],
-  15: ['q', 'keyQ', 'singleSize'],
-  16: ['w', 'keyW', 'singleSize'],
-  17: ['e', 'keyE', 'singleSize'],
-  18: ['r', 'keyR', 'singleSize'],
-  19: ['t', 'keyT', 'singleSize'],
-  20: ['y', 'keyY', 'singleSize'],
-  21: ['u', 'keyU', 'singleSize'],
-  22: ['i', 'keyI', 'singleSize'],
-  23: ['o', 'keyO', 'singleSize'],
-  24: ['p', 'keyP', 'singleSize'],
+  15: ['q', 'KeyQ', 'singleSize'],
+  16: ['w', 'KeyW', 'singleSize'],
+  17: ['e', 'KeyE', 'singleSize'],
+  18: ['r', 'KeyR', 'singleSize'],
+  19: ['t', 'KeyT', 'singleSize'],
+  20: ['y', 'KeyY', 'singleSize'],
+  21: ['u', 'KeyU', 'singleSize'],
+  22: ['i', 'KeyI', 'singleSize'],
+  23: ['o', 'KeyO', 'singleSize'],
+  24: ['p', 'KeyP', 'singleSize'],
   25: ['[', 'BracketLeft', 'singleSize'],
   26: [']', 'BracketRight', 'singleSize'],
   27: ['\\', 'Backslash', 'singleSize'],
@@ -69,9 +69,9 @@ let keys = {
   // row 5
   54: ['control', 'ControlLeft', 'doubleSize', 'functional'],
   55: ['alt', 'AltLeft', 'singleSize', 'functional'],
-  56: ['cmd', 'CommandLeft', 'singleSize', 'functional'],
+  56: ['cmd', 'MetaLeft', 'singleSize', 'functional'],
   57: ['space', 'Space', 'sixSize', 'functional'],
-  58: ['cmd', 'CommandRight', 'singleSize', 'functional'],
+  58: ['cmd', 'MetaRight', 'singleSize', 'functional'],
   59: ['←', 'ArrowLeft', 'singleSize', 'functional'],
   60: ['↓', 'ArrowDown', 'singleSize', 'functional'],
   61: ['→', 'ArrowRight', 'singleSize', 'functional'],
@@ -80,13 +80,14 @@ let keys = {
 
 let keysArray = Object.keys(keys);
 
-
 window.onload = function() {
   console.log('Hello my Pets enthusiast');
+
   // petsJSON.forEach(pet => {
   //     console.log(pet.name, pet.img);
   // });
   renderUI();
+  addMechanicalKeyboardListeners();
 };
 
 function renderUI() {
@@ -102,6 +103,7 @@ function renderUI() {
 
   const textArea = document.createElement('textarea');
   textArea.className = 'text-area';
+  textArea.setAttribute('autofocus', '');
   textArea.setAttribute('rows', 6);
   textArea.setAttribute('columns', 50);
   contentWrapper.append(textArea);
@@ -122,11 +124,7 @@ function renderUI() {
   body.append(contentWrapper);
 }
 
-
-
-
 function createKeyboard() {
-
   function createKey(id, readableIdentifier, value, sizeClass, functionalClass) {
     const key = document.createElement('button');
     key.classList.add('key', `${readableIdentifier}`, `${sizeClass}`, `${functionalClass}`);
@@ -149,8 +147,6 @@ function createKeyboard() {
     return row;
   }
 
-
-
   const keyboard = document.createElement('div');
   keyboard.className = 'keyboard';
 
@@ -159,4 +155,36 @@ function createKeyboard() {
   }
 
   return keyboard;
+}
+
+function addMechanicalKeyboardListeners() {
+  document.body.addEventListener('keydown', keyDown);
+  document.body.addEventListener('keyup', keyUp);
+
+
+}
+
+function keyDown(index) {
+  console.log(index.key);
+  console.log(index);
+
+  let buttons = document.querySelectorAll('.key');
+  for (let i = 0; i < buttons.length; i++) {
+    if (buttons[i].classList.contains(index.code)) {
+      buttons[i].classList.add('pressed');
+    } else {
+      buttons[i].classList.remove('pressed');
+
+    }
+  }
+}
+
+function keyUp(index) {
+  console.log(index.key);
+  console.log(index);
+
+
+  //document.querySelector('textArea').value += index.key;
+
+
 }
