@@ -1,6 +1,6 @@
 let language = 'en'; // 'ru' and 'en' supported only
 
-let rows = [
+const rows = [
   [0, 14],
   [14, 28],
   [28, 41],
@@ -8,7 +8,7 @@ let rows = [
   [54, 63]
 ];
 
-let keys = {
+const keys = {
   0: ['`', 'Backquote', 'singleSize'],
   1: ['1', 'Digit1', 'singleSize'],
   2: ['2', 'Digit2', 'singleSize'],
@@ -78,7 +78,7 @@ let keys = {
   62: ['alt', 'AltRight', 'singleSize', 'functional']
 };
 
-let keysArray = Object.keys(keys);
+const keysArray = Object.keys(keys);
 
 window.onload = function() {
   console.log('Hello my Pets enthusiast');
@@ -87,6 +87,7 @@ window.onload = function() {
   //     console.log(pet.name, pet.img);
   // });
   renderUI();
+  addVirtualKeyboardListeners();
   addMechanicalKeyboardListeners();
 };
 
@@ -115,10 +116,10 @@ function renderUI() {
   osDescription.textContent = 'The keyboard is created and designed on Mac OS';
   contentWrapper.append(osDescription);
 
-  const language = document.createElement('p');
-  language.className = 'language';
-  language.textContent = 'To change language use left ctrl + alt combination';
-  contentWrapper.append(language);
+  const languageP = document.createElement('p');
+  languageP.className = 'language';
+  languageP.textContent = 'To change language use left ctrl + alt combination';
+  contentWrapper.append(languageP);
 
   const body = document.querySelector('body');
   body.append(contentWrapper);
@@ -141,7 +142,7 @@ function createKeyboard() {
     rowKeys.forEach(keyID => {
       const keyData = keys[keyID];
       const functionalClass = keyData[3] ? keyData[3] : 'symbol';
-      let keyButton = createKey(keyID, keyData[1], keyData[0], keyData[2], functionalClass);
+      const keyButton = createKey(keyID, keyData[1], keyData[0], keyData[2], functionalClass);
       row.append(keyButton);
     });
     return row;
@@ -150,31 +151,37 @@ function createKeyboard() {
   const keyboard = document.createElement('div');
   keyboard.className = 'keyboard';
 
-  for (let i=0; i< 5; i++) {
+  for (let i = 0; i < 5; i++) {
     keyboard.append(createRowAtIndex(i));
   }
 
   return keyboard;
 }
 
+
 function addMechanicalKeyboardListeners() {
   document.body.addEventListener('keydown', keyDown);
   document.body.addEventListener('keyup', keyUp);
+}
 
-
+function addVirtualKeyboardListeners() {
+  const keyboard = document.querySelector('.keyboard');
+  keyboard.addEventListener('mousedown', mouseDown);
+  keyboard.addEventListener('mouseup', mouseUp);
 }
 
 function keyDown(index) {
-  console.log(index.key);
-  console.log(index);
+  console.log('keyDown');
+  const textArea = document.querySelector('textArea');
+  textArea?.focus();
 
-  let buttons = document.querySelectorAll('.key');
+  // console.log(index.key);
+  // console.log(index);
+
+  const buttons = document.querySelectorAll('.key');
   for (let i = 0; i < buttons.length; i++) {
     if (buttons[i].classList.contains(index.code)) {
       buttons[i].classList.add('pressed');
-    } else {
-      buttons[i].classList.remove('pressed');
-
     }
   }
 }
@@ -182,9 +189,57 @@ function keyDown(index) {
 function keyUp(index) {
   console.log(index.key);
   console.log(index);
+  const buttons = document.querySelectorAll('.key');
+  for (let i = 0; i < buttons.length; i++) {
+    if (buttons[i].classList.contains(index.code)) {
+      buttons[i].classList.remove('pressed');
+    }
+  }
+}
 
+function mouseDown(e) {
+  console.log('mouseDown', e);
+  const keyButton = e.target?.closest('.key');
+  if (keyButton) {
+    const keyID = keyButton.getAttribute('data-id');
+    const keyData = keys[keyID];
+    const keyEvent = new KeyboardEvent('keydown', {
+      key: keyData[0],
+      code: keyData[1],
+      bubbles: true
+    });
+    const textArea = document.querySelector('textArea');
+    console.log(keyEvent);
+    textArea.dispatchEvent(keyEvent);
+  }
+}
 
-  //document.querySelector('textArea').value += index.key;
-
-
+function mouseUp(e) {
+  console.log('mouseUp', e.target);
+  const keyButton = e.target?.closest('.key');
+  if (keyButton) {
+    const keyID = keyButton.getAttribute('data-id');
+    const keyData = keys[keyID];
+    const keyEvent = new KeyboardEvent('keyup', {
+      key: keyData[0],
+      code: keyData[1],
+      bubbles: true
+    });
+    const textArea = document.querySelector('textArea');
+    textArea.dispatchEvent(keyEvent);
+  }
+  // console.log(e);
+  // if (keyButton) {
+  //   let keyID = keyButton.getAttribute('data-id');
+  //   let keyData = keys[keyID];
+  //   let keyEvent = new KeyboardEvent('keydown', {
+  //     key: keyData[0],
+  //     code: keyData[1],
+  //     keyCode: '20',
+  //     bubbles: true
+  //   });
+  //   console.log(`mouseUp, dispatch event keydown ${keyEvent}`);
+  //   const textArea = document.querySelector('textArea');
+  //   console.log(textArea, keyEvent);
+  //   textArea.dispatchEvent(keyEvent);
 }
