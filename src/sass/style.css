@@ -377,6 +377,7 @@ html {
 .key.pressed {
   box-shadow: inset -2px -2px 4px rgb(63, 63, 63), inset 2px 2px 4px black;
   background-color: green;
+  transition: all 0.3s ease-out;
 }
 
 .doubleSize {
