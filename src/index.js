@@ -1,4 +1,6 @@
-let language = 'en'; // 'ru' and 'en' supported only
+//let language = 'en'; // 'ru' and 'en' supported only
+
+import LANGUAGES from './js/languages.js';
 
 const rows = [
   [0, 14],
@@ -79,6 +81,11 @@ const keys = {
 };
 
 const keysArray = Object.keys(keys);
+const state = {
+  isShiftPressed: false,
+  isCapsLockPressed: false,
+  lang: LANGUAGES.eng
+};
 
 window.onload = function() {
   console.log('Hello my Pets enthusiast');
@@ -89,6 +96,7 @@ window.onload = function() {
   renderUI();
   addVirtualKeyboardListeners();
   addMechanicalKeyboardListeners();
+
 };
 
 function renderUI() {
@@ -139,7 +147,7 @@ function createKeyboard() {
     row.className = 'keyboard__row';
     row.setAttribute('data-id', i);
     const rowKeys = keysArray.slice(rows[i][0], rows[i][1]);
-    rowKeys.forEach(keyID => {
+    rowKeys.forEach((keyID) => {
       const keyData = keys[keyID];
       const functionalClass = keyData[3] ? keyData[3] : 'symbol';
       const keyButton = createKey(keyID, keyData[1], keyData[0], keyData[2], functionalClass);
@@ -170,8 +178,9 @@ function addVirtualKeyboardListeners() {
   keyboard.addEventListener('mouseup', mouseUp);
 }
 
-function keyDown(index) {
-  console.log('keyDown');
+function keyDown(keyEvent) {
+  console.log(` keyDown event: isTrusted = ${keyEvent.isTrusted}, keyEvent.code = ${keyEvent.code} `);
+  //console.log('keyDown');
   const textArea = document.querySelector('textArea');
   textArea?.focus();
 
@@ -180,18 +189,22 @@ function keyDown(index) {
 
   const buttons = document.querySelectorAll('.key');
   for (let i = 0; i < buttons.length; i++) {
-    if (buttons[i].classList.contains(index.code)) {
+    if (buttons[i].classList.contains(keyEvent.code)) {
       buttons[i].classList.add('pressed');
     }
   }
+
+  if (!keyEvent.isTrusted) {
+    applyKeyManually(keyEvent);
+  }
 }
 
-function keyUp(index) {
-  console.log(index.key);
-  console.log(index);
+function keyUp(keyEvent) {
+  console.log(` keyUp event: isTrusted = ${keyEvent.isTrusted}, keyEvent.code = ${keyEvent.code} `);
+  //console.log(keyEvent);
   const buttons = document.querySelectorAll('.key');
   for (let i = 0; i < buttons.length; i++) {
-    if (buttons[i].classList.contains(index.code)) {
+    if (buttons[i].classList.contains(keyEvent.code)) {
       buttons[i].classList.remove('pressed');
     }
   }
@@ -242,4 +255,39 @@ function mouseUp(e) {
   //   const textArea = document.querySelector('textArea');
   //   console.log(textArea, keyEvent);
   //   textArea.dispatchEvent(keyEvent);
+}
+
+function applyKeyManually(keyEvent) {
+  const textArea = document.querySelector('textArea');
+  if (isFunctionalKey(keyEvent.code)) {
+
+  } else {
+    textArea.value += currentValueForKey(keyEvent.code, state);
+  }
+}
+
+function isFunctionalKey(keyCode) {
+  const keyData = keyDataForKeyCode(keyCode);
+  if (keyData[3] === 'functional') {
+    return true;
+  }
+  return false;
+}
+
+function currentValueForKey(keyCode, currentState) {
+  if (currentState.lang === LANGUAGES.eng) {
+    let keyData  = keyDataForKeyCode(keyCode);
+    return keyData[0];
+  } else {
+    return 'Ж';
+  }
+}
+
+function keyDataForKeyCode(keyCode) {
+  for (let [key, value] of Object.entries(keys)) {
+    if (value[1] === keyCode) {
+      return value;
+    }
+  }
+  //return keysA.find((element) => element[1][1] === keyCode)[1];
 }
